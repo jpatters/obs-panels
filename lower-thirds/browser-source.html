@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" href="./common/css/source.css" />
+    <title>Receiver demo</title>
+    <script>
+      var bc = new BroadcastChannel("obs-lower-thirds-channel");
+      bc.onmessage = function (ev) {
+        received_data = ev.data.split("|");
+        document.getElementById("name").innerHTML = received_data[0];
+        document.getElementById("function").innerHTML = received_data[1];
+        animation = received_data[2];
+        console.log(
+          "Name: " +
+            received_data[0] +
+            ", Function: " +
+            received_data[1] +
+            ", Animation: " +
+            received_data[2]
+        );
+
+        if (animation == "animateIn") {
+          document.getElementById("main").classList.remove("hide");
+          document.getElementById("main").classList.add("animate");
+          document.getElementById("animation-1").classList.remove("hide");
+          document.getElementById("animation-1").classList.add("animation");
+        }
+
+        if (animation == "animateOut") {
+          document.getElementById("main").classList.remove("animate");
+          document.getElementById("main").classList.add("hide");
+          document.getElementById("animation-1").classList.remove("animation");
+          document.getElementById("animation-1").classList.add("hide");
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <main id="main" class="hide">
+      <div id="animation-1" class="hide">
+        <div class="red">/</div>
+        <div class="white light mask">
+          <div id="name">Mike Burns</div>
+        </div>
+        <div class="white light mask">
+          <div id="function">Senior Pastor</div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
